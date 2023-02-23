@@ -4,19 +4,21 @@ USE AMPCORP;
 
 CREATE TABLE ADMIN(
 	adminId INT PRIMARY KEY AUTO_INCREMENT,
-	userName varchar(20) NOT NULL,
+	userName varchar(20) NOT NULL UNIQUE,
 	password varchar(20) NOT NULL
 );
+
+INSERT INTO ADMIN (userName,password) VALUES("admin","admin");
 
 CREATE TABLE CUSTOMER(
 	customerId INT PRIMARY KEY AUTO_INCREMENT,
 	firstName varchar(20) NOT NULL,
 	lastName varchar(20) NOT NULL,
-	userName varchar(20) NOT NULL,
+	userName varchar(20) NOT NULL UNIQUE,
 	password varchar(20) NOT NULL,
 	regDate Date NOT NULL,
 	status varchar(8) default "active",
-	type int Not null
+	type varchar(15) Not null default "private"
 );
 
 CREATE TABLE BILL(
@@ -26,25 +28,17 @@ CREATE TABLE BILL(
 	status varChar(6) default 'unpaid',
 	units INT NOT NULL,
 	customerStatus varchar(8) default "active",
-	transactionID INT,
-	pendingAmount INT default 0
-);
-
-CREATE TABLE CUSTOMER_TYPE(
-	CTID INT PRIMARY KEY AUTO_INCREMENT,
-	CTNAME varchar(20) NOT NULL
-);
-
-INSERT INTO CUSTOMER_TYPE (CTNAME) VALUES
-("Private"),
-("Commercial");
-
-CREATE TABLE TRANSACTION(
-	TransactionID INT PRIMARY KEY AUTO_INCREMENT,
 	PreviousAmount INT default 0,
 	CurrentAmount Int NOT NULL,
 	FIXEDCHARGE INT NOT NULL,
-	Tax INT NOT NULL,
-	TOTALAMOUNT INT NOT NULL,
+	Tax DOUBLE NOT NULL,
+	unitCharge int not null,
+	TOTALAMOUNT INT NOT NULL
+);
+
+CREATE TABLE TRANSACTION(
+	TransactionID INT PRIMARY KEY AUTO_INCREMENT,
+	TransactionAmount INT NOT NULL,
+	BillId Int NOT NULL,
 	DATE_OF_TRANSACTION DATE NOT NULL
 );
