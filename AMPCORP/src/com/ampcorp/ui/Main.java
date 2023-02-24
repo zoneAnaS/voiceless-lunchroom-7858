@@ -275,6 +275,9 @@ public class Main {
 							System.out.println("please enter customer id");
 							int customerId=sc.nextInt();
 							cus=admin.getCustomerByCustomerId(customerId);
+							if(cus==null) {
+								System.out.println(RED+"No customer found!"+RESET);
+							}
 							if(customerEntryTries==3 && cus==null) {
 								customerEntryTries=0;
 								System.out.println("Do you want to exit? Y/N");
@@ -410,6 +413,8 @@ public class Main {
 					continue;
 				}
 				System.out.println(GREEN+"Login Successfull!!"+RESET);
+				System.out.println(customer.welcomeCustomerText());
+				customer.generateBill(2);
 				
 				
 				

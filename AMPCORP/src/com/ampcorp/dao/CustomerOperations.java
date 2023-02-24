@@ -12,4 +12,5 @@ public interface CustomerOperations {
 	public List<Transaction> showTransactionHistory();
 	public List<Bill> showAllUnpaidBill();
 	public List<Bill> showAllPaidBills();
+	public Bill getBillByBillId(int billId);
 }
