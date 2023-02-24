@@ -396,6 +396,40 @@ public class AdminOperationsImpl implements AdminOperations {
 		}
 		return customerList;
 	}
+	public Customer getAllCustomerByCustomerId(int CID) {
+		Connection con=null;
+		Customer customer=null;
+		String GET_QUERY="SELECT * FROM CUSTOMER WHERE customerId=?";
+		try {
+			try {
+				con=DB_connection.makeConnection();
+				PreparedStatement ps=con.prepareStatement(GET_QUERY);
+				ps.setInt(1, CID);
+				ResultSet rs=ps.executeQuery();
+				while(rs.next()) {
+					String firstName=rs.getString("firstName");
+					String lastName=rs.getString("lastName");
+					String userName=rs.getString("userName");
+					String password=rs.getString("password");
+					String type=rs.getString("type");
+					Date regDate=rs.getDate("regDate");
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					String date=formatter.format(regDate);
+					int customerId=rs.getInt("customerId");
+					customer=new CustomerImpl(firstName,lastName,userName,password,LocalDate.parse(date),type);
+					customer.setCustomerId(customerId);
+				}
+				
+			}catch(SQLException  e) {
+				throw new AdminException("Something went wrong!");
+			}
+		}catch(AdminException e) {
+			System.out.println(RED+e.getMessage()+RESET);
+		}finally {
+			DB_connection.closeConnection();
+		}
+		return customer;
+	}
 	@Override
 	public Customer getCustomerByCustomerId(int CID) {
 		Connection con=null;
@@ -496,18 +530,18 @@ public class AdminOperationsImpl implements AdminOperations {
 		}
 		System.out.println(GREEN+"\n\nGreen"+RESET+"= paid bill");
 		System.out.println(RED+"RED"+RESET+"= unpaid bill");
-		System.out.println("=======================================================================================");
+		System.out.println("===============================================================================================");
 		for(int i=0;i<billList.size();i++) {
 			if(billList.get(i).getStatus().equals("paid")) {
-				System.out.println(GREEN+billList.get(i)+RESET);
+				System.out.println("\t"+GREEN+billList.get(i)+RESET);
 			}else {
-				System.out.println(RED+billList.get(i)+RESET);
+				System.out.println("\t"+RED+billList.get(i)+RESET);
 			}
 			if(i!=billList.size()-1) {
-		System.out.println("------------------------------------------------------------------------------------");
+		System.out.println("--------------------------------------------------------------------------------------------");
 			}
 		}
-		System.out.println("=======================================================================================\n\n");
+		System.out.println("===============================================================================================\n\n");
 	}
 	@Override
 	public List<Bill> getAllBills() {
@@ -536,7 +570,7 @@ public class AdminOperationsImpl implements AdminOperations {
 						if(map.containsKey(cusId)) {
 							cus=map.get(cusId);
 						}else {
-							cus=this.getCustomerByCustomerId(cusId);
+							cus=this.getAllCustomerByCustomerId(cusId);
 							map.put(cusId,cus);
 						}
 						Bill bill=new BillImpl(LocalDate.parse(date),units,unitCharge,PreviousAmount,FIXEDCHARGE,tax,cus);
@@ -585,7 +619,7 @@ public class AdminOperationsImpl implements AdminOperations {
 						if(map.containsKey(cusId)) {
 							cus=map.get(cusId);
 						}else {
-							cus=this.getCustomerByCustomerId(cusId);
+							cus=this.getAllCustomerByCustomerId(cusId);
 							map.put(cusId,cus);
 						}
 						Bill bill=new BillImpl(LocalDate.parse(date),units,unitCharge,PreviousAmount,FIXEDCHARGE,tax,cus);
