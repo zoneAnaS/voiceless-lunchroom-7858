@@ -135,7 +135,7 @@ public class BillImpl implements Bill {
 
 	@Override
 	public String toString() {
-		return "Bill[id="+this.billId+"  customerName="+this.customer.getFirstName()+" "+this.customer.getLastName()+" BillDate="+this.billDate+" totalAmount="+this.getTotalAmount()+"]";
+		return "Bill ID="+this.billId+"  Name="+this.customer.getFirstName()+" "+this.customer.getLastName()+" BillDate="+this.billDate+" Amount="+"\033[1m"+this.getTotalAmount();
 	}
 	
 	

@@ -5,51 +5,42 @@ import java.util.Objects;
 
 public class TransactionImpl implements Transaction {
 	private int transactionId;
-	private Bill bill;
+	private int billID;
 	private int totalAmount;
 	private LocalDate transactionDate;
-	public TransactionImpl(Bill bill, int totalAmount, LocalDate transactionDate) {
+	public TransactionImpl(int billID, int totalAmount, LocalDate transactionDate) {
 		super();
-		this.bill = bill;
+		this.billID = billID;
 		this.totalAmount = totalAmount;
 		this.transactionDate = transactionDate;
 	}
-	
 	public int getTransactionId() {
 		return transactionId;
 	}
-
 	public void setTransactionId(int transactionId) {
 		this.transactionId = transactionId;
 	}
-
-	public Bill getBill() {
-		return bill;
+	public int getBillID() {
+		return billID;
 	}
-
-	public void setBill(Bill bill) {
-		this.bill = bill;
+	public void setBillID(int billID) {
+		this.billID = billID;
 	}
-
 	public int getTotalAmount() {
 		return totalAmount;
 	}
-
 	public void setTotalAmount(int totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-
 	public LocalDate getTransactionDate() {
 		return transactionDate;
 	}
-
 	public void setTransactionDate(LocalDate transactionDate) {
 		this.transactionDate = transactionDate;
 	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(transactionId);
+		return Objects.hash(billID, transactionId);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -60,7 +51,14 @@ public class TransactionImpl implements Transaction {
 		if (getClass() != obj.getClass())
 			return false;
 		TransactionImpl other = (TransactionImpl) obj;
-		return transactionId == other.transactionId;
+		return billID == other.billID && transactionId == other.transactionId;
 	}
-	
+	@Override
+	public String toString() {
+		return "Transaction [Transaction ID=" + transactionId + ", Bill ID=" + billID + ", Amount=" + totalAmount
+				+ ", Date=" + transactionDate + "]";
+	}
 }
+	
+	
+

@@ -547,7 +547,7 @@ public class AdminOperationsImpl implements AdminOperations {
 	public List<Bill> getAllBills() {
 		List<Bill> billList=new ArrayList<>();
 		Connection con=null;
-		String GET_QUERY="SELECT * FROM Bill order by billDate";
+		String GET_QUERY="SELECT * FROM Bill order by billDate desc,custID desc";
 		HashMap<Integer,Customer> map=new HashMap<>();
 		try {
 			try {
@@ -596,7 +596,7 @@ public class AdminOperationsImpl implements AdminOperations {
 	public List<Bill> getAllUnpaidBills() {
 		List<Bill> billList=new ArrayList<>();
 		Connection con=null;
-		String GET_QUERY="SELECT * FROM Bill where status='unpaid' order by billDate";
+		String GET_QUERY="SELECT * FROM Bill where status='unpaid' order by billDate Desc,custID asc";
 		HashMap<Integer,Customer> map=new HashMap<>();
 		try {
 			try {

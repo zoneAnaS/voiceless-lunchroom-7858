@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 import com.ampcorp.dao.AdminOperationsImpl;
 import com.ampcorp.dao.CustomerOperationsImpl;
-import com.ampcorp.dao.DB_connection;
 import com.ampcorp.dto.Bill;
 import com.ampcorp.dto.BillImpl;
 import com.ampcorp.dto.Customer;
 import com.ampcorp.dto.CustomerImpl;
+import com.ampcorp.dto.Transaction;
 
 public class Main {
 	public static final String ANSI_BOLD = "\033[1m";
@@ -28,6 +28,8 @@ public class Main {
 	private static String welcomeText;
 	private static String customerType;
 	private static String monthMenu;
+	private static String customerMenu;
+	private static String payMenu;
 	
 	
 	static {
@@ -51,7 +53,23 @@ public class Main {
 				 +"+---------+--------------+\n"
 				 +"|    0    |     Exit     |\n"
 				 +"+---------+--------------+\n";
-		
+		customerMenu="+===========================================+\n"
+				 +"|             "+RED+ANSI_BOLD+"Customer Menu"+ANSI_RESET+RESET+"                 |\n"
+				 +"+=========+=================================+\n"
+				 +"|  "+YELLOW+ANSI_BOLD+"Choice"+ANSI_RESET+RESET+RESET+" |          "+YELLOW+ANSI_BOLD+"Operations"+ANSI_RESET+RESET+"             |\n"
+				 +" =========+=================================+\n"
+				 +"|    1    |        Show unpaid bills        |\n"
+				 +"+-------------------------------------------+\n"
+				 +"|    2    |         Show paid bills         |\n"
+				 +"+---------+---------------------------------+\n"
+				 +"|    3    |             Pay bill            |\n"
+				 +"+---------+---------------------------------+\n"
+				 +"|    4    |       Transaction history       |\n"
+				 +"+---------+---------------------------------+\n"
+				 +"|    5    |           Get bill              |\n"
+				 +"+---------+---------------------------------+\n"
+				 +"|    0    |            Logout               |\n"
+				 +"+---------+---------------------------------+\n";
 		adminMenu="+===========================================+\n"
 				 +"|               "+RED+ANSI_BOLD+"Admin Menu"+ANSI_RESET+RESET+"                  |\n"
 				 +"+=========+=================================+\n"
@@ -109,6 +127,13 @@ public class Main {
 				 +"+---------+---------------+\n"
 				 +"|    12   |      Dec      |\n"
 				 +"+---------+---------------+\n";
+		payMenu="+=========================+\n"
+			   +"|    "+YELLOW+ANSI_BOLD+"Do you want to Pay?"+ANSI_RESET+"  |\n"
+			   +"+=========================+\n"
+			   +"|    1    |      Yes      |\n"
+			   +"+---------+---------------+\n"
+			   +"|    0    |       No      |\n"
+			   +"+---------+---------------+\n";
 	
 	}
 	
@@ -407,16 +432,104 @@ public class Main {
 					System.out.println("Please Enter Customer password");
 					password=sc.next();
 					tries++;
-				}while(customer.login(username, password)!=true || tries==limit);
+				}while(customer.login(username, password)!=true && tries!=limit);
 				if(tries==limit) {
 					System.out.println(RED+"\nMaximum try limit reached\nRedirecting to main menu\n"+RESET);
 					continue;
 				}
 				System.out.println(GREEN+"Login Successfull!!"+RESET);
 				System.out.println(customer.welcomeCustomerText());
-				customer.generateBill(2);
-				
-				
+				int customerChoice=0;
+				do {
+					System.out.println(customerMenu);
+					customerChoice=sc.nextInt();
+					if(customerChoice==1) {
+						List<Bill> billList=customer.showAllUnpaidBill();
+						if(billList.isEmpty()) {
+							System.out.println(RED+"No unpaid bill found!"+RESET);
+							continue;
+						}
+						System.out.println(YELLOW+ANSI_BOLD+"UNPAID BILLS"+RESET);
+						System.out.println(RED+"==============================================================================");
+						for(int i=0;i<billList.size();i++) {
+							System.out.println(ANSI_RESET+RED+billList.get(i));
+							if(i!=billList.size()-1) {
+							  System.out.println("----------------------------------------------------------------------");
+							}
+						}
+						System.out.println(ANSI_RESET+RED+"=============================================================================="+RESET);
+					}else if(customerChoice==2) {
+
+						List<Bill> billList=customer.showAllPaidBills();
+						if(billList.isEmpty()) {
+							System.out.println(RED+"No paid bill found!"+RESET);
+							continue;
+						}
+						System.out.println(YELLOW+ANSI_BOLD+"PAID BILLS"+RESET);
+						System.out.println(GREEN+"==============================================================================");
+						for(int i=0;i<billList.size();i++) {
+							System.out.println(ANSI_RESET+GREEN+billList.get(i));
+							if(i!=billList.size()-1) {
+							  System.out.println("----------------------------------------------------------------------");
+							}
+						}
+						System.out.println(ANSI_RESET+GREEN+"=============================================================================="+RESET);
+					}
+					else if(customerChoice==3) {
+						Bill bill=customer.getLatestUnpaidBill();
+						if(bill==null) {
+							continue;
+						}
+						customer.generateBill(bill.getBillId());
+						int paymentChoice=0;
+						do {
+							System.out.println(payMenu);
+							paymentChoice=sc.nextInt();
+							if(paymentChoice==1) {
+								if(customer.payBill(bill.getBillId())) {
+									System.out.println(GREEN+"Payment Successfull!"+RESET);
+								}
+								break;
+								
+							}else if(paymentChoice!=0) {
+								System.out.println(RED+"Invalid Input!"+RESET);
+							}else {
+								System.out.println(RED+"Transaction terminated!"+RESET);
+							}
+						}
+						while(paymentChoice!=0);
+						
+					}
+					else if(customerChoice==4) {
+						
+						List<Transaction> transList=customer.showTransactionHistory();
+						if(transList.isEmpty()) {
+							System.out.println(RED+"No transaction history!"+RESET);
+							continue;
+						}
+						System.out.println(YELLOW+ANSI_BOLD+"Transaction History"+RESET);
+						System.out.println(GREEN+"==============================================================================");
+						for(int i=0;i<transList.size();i++) {
+							System.out.println(transList.get(i));
+							if(i!=transList.size()-1) {
+							  System.out.println("----------------------------------------------------------------------");
+							}
+						}
+						System.out.println("=============================================================================="+RESET);
+					}
+					else if(customerChoice==5) {
+						System.out.println("Enter Bill Id");
+						int BillId=sc.nextInt();
+						customer.generateBill(BillId);
+						
+						
+					}
+					else if(customerChoice!=0){
+						System.out.println(RED+"Invalid Input!"+RESET);
+					}
+				}
+				while(customerChoice!=0);
+				System.out.println(GREEN+"Logged Out!!"+RESET);
 				
 				
 			}else if(mainMenuChoice!=0){
@@ -431,16 +544,13 @@ public class Main {
 		
 		
 		
-		try {
-			DB_connection.closeConnection();
-		}catch(Exception e) {
-			
-		}
+		
 		
 		sc.close();
 		System.out.println(RED+ANSI_BOLD+ "            AmpCorp");
 		System.out.println(YELLOW+ANSI_BOLD+"Electricity that powers progress     ");
 		System.out.println(GREEN+ANSI_BOLD+ "    Thank you for Visiting!"+RESET+ANSI_RESET);
+		System.exit(0);
 	}
 	
 	
