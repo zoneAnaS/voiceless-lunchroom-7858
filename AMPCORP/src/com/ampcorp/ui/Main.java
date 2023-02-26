@@ -68,6 +68,8 @@ public class Main {
 				 +"+---------+---------------------------------+\n"
 				 +"|    5    |           Get bill              |\n"
 				 +"+---------+---------------------------------+\n"
+				 +"|    6    |         Your Account            |\n"
+				 +"+---------+---------------------------------+\n"
 				 +"|    0    |            Logout               |\n"
 				 +"+---------+---------------------------------+\n";
 		adminMenu="+===========================================+\n"
@@ -244,18 +246,28 @@ public class Main {
 					}else if(adminChoice==3) {
 						List<Customer> customers=admin.getAllCustomer();
 						if(customers.size()>0) {
+							System.out.println(BLUE+"=========================================================================================");
 							for(int i=0;i<customers.size();i++) {
-								System.out.println((i+1)+". "+customers.get(i));
+								System.out.println(customers.get(i));
+								if(i!=customers.size()-1) {
+									System.out.println("------------------------------------------------------------------------");
+								}
 							}
+							System.out.println("=========================================================================================\n"+RESET);
 						}else {
 							System.out.println(RED+"No active customer found!!"+RESET);
 						}
 					}else if(adminChoice==4) {
 						List<Customer> customers=admin.getAllInactiveCustomer();
 						if(customers.size()>0) {
+							System.out.println(RED+"=========================================================================================");
 							for(int i=0;i<customers.size();i++) {
-								System.out.println((i+1)+". "+customers.get(i));
+								System.out.println(customers.get(i));
+								if(i!=customers.size()-1) {
+									System.out.println("------------------------------------------------------------------------");
+								}
 							}
+							System.out.println("=========================================================================================\n"+RESET);
 						}else {
 							System.out.println(RED+"No inactive customer found!!"+RESET);
 						}
@@ -523,6 +535,10 @@ public class Main {
 						customer.generateBill(BillId);
 						
 						
+					}else if(customerChoice==6){
+						System.out.println(BLUE+"====================================================================================================");
+						System.out.println(CustomerOperationsImpl.customer);
+						System.out.println("====================================================================================================="+RESET);
 					}
 					else if(customerChoice!=0){
 						System.out.println(RED+"Invalid Input!"+RESET);

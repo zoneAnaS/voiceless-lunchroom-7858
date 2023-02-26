@@ -80,7 +80,7 @@ public class CustomerImpl implements Customer{
 	}
 	@Override
 	public String toString() {
-		return "Customer "+this.customerId+" Type: "+this.type+" Name: "+this.firstName+" "+this.lastName+" UserName: "+this.userName+" regDate: "+this.regDate;
+		return "Customer ID: "+this.customerId+" Type: "+this.type+" Name: "+this.firstName+" "+this.lastName+" UserName: "+this.userName+" regDate: "+this.regDate;
 	}
 	
 	
