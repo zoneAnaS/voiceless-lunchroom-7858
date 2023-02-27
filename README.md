@@ -1,3 +1,9 @@
+
+
+<div style="text-align: center;">
+  <img src="https://drive.google.com/uc?export=view&id=1bZiv9jUCczfX8HgCOEIdwAXktz3e9neJ" style="width: 300px; display: inline-block;">
+</div>
+
 <h1>Ampcorp</h1>
 Welcome to AmpCorp, the reliable and affordable electricity corporation committed to providing innovative and sustainable energy solutions. We have a team of experts with the knowledge and experience to develop efficient energy plans, manage the grid, and distribute power. At AMPcorp, we believe in a brighter future powered by sustainable energy, and we are dedicated to providing the best possible solutions to our customers.
 
