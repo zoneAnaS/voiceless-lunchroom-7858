@@ -33,3 +33,17 @@ Welcome to AmpCorp, the reliable and affordable electricity corporation committe
 <h3>Table Schema</h3>
 
 ![Table Schema](https://drive.google.com/uc?export=view&id=1MjQXUVBBjtcrlVyAjjy2lCtbhMecO-5a)
+
+<h3>Application UI</h3>
+
+<h4>Login Menu</h4>
+
+![Login Menu](https://drive.google.com/uc?export=view&id=1tUY32gr5hcNuwaIkM3vaORIx-aGT25Jz)
+
+<h4>Admin Menu</h4>
+
+![Admin Menu](https://drive.google.com/uc?export=view&id=1fay_psqmMGtViaAJBXEMPnE9G2Fw0DjN)
+
+<h4>Customer Menu</h4>
+
+![Customer Menu](https://drive.google.com/uc?export=view&id=1--cS6puYQNksMv8Z_RZhekzlIxyGATg8)
