@@ -18,12 +18,18 @@ Welcome to AmpCorp, the reliable and affordable electricity corporation committe
 
 <h3>Customer operations</h3>
 
+- Login/Logout
 - Show unpaid bills
 - Show paid bills
 - Pay bill
 - Transaction history
 - Get bill
 - Your Account
-- Logout
+
+<h3>Tech Stacks</h3>
+
+[![Text Stack](https://skillicons.dev/icons?i=java,mysql)](https://skillicons.dev)
+
+<h3>Table Schema</h3>
 
 ![Table Schema](https://drive.google.com/uc?export=view&id=1MjQXUVBBjtcrlVyAjjy2lCtbhMecO-5a)
