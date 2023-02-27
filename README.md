@@ -28,7 +28,7 @@ Welcome to AmpCorp, the reliable and affordable electricity corporation committe
 
 <h3>Tech Stacks</h3>
 
-[![Text Stack](https://skillicons.dev/icons?i=java,mysql)](https://skillicons.dev)
+[![Text Stack](https://skillicons.dev/icons?i=java,mysql,github,git)](https://skillicons.dev)
 
 <h3>Table Schema</h3>
 
